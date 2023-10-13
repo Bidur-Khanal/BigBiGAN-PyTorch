@@ -14,7 +14,7 @@ class ResNetEnc(nn.Module):
         res_block2 = layers.LinearResnetBlock(mlp_dim, mlp_dim, dropout, sn=False, w_init=w_init)
         fc = nn.Sequential(res_block1, res_block2)
         resnet.fc = fc
-        resnet.conv1 = nn.Conv2d(ch, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        #resnet.conv1 = nn.Conv2d(ch, 64, kernel_size=7, stride=2, padding=3, bias=False)
         self.model = resnet
 
     def forward(self, x):
@@ -23,6 +23,8 @@ class ResNetEnc(nn.Module):
     @classmethod
     def from_config(cls, config):
         model_version = config.enc_model
+
+        print (model_version)
         if model_version == "resnet_18":
             resnet = models.resnet18(pretrained=False, progress=True)
         elif model_version == "resnet_50":

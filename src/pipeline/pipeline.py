@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import torchvision
 import torchvision.utils as vutils
 from tqdm import tqdm
 from pathlib import Path
-
+import pdb
 from src.data_processing import data_loading
 from src.pipeline import logger as training_logger
 from src.model import architecture
@@ -26,10 +27,10 @@ class Pipeline:
         self.config = config
         self.counter = 0
 
-    def train_model(self):
+    def train_model(self, neptune_run = None):
         for epoch in range(self.config.epochs):
             self.counter = 0
-            self.run_epoch(epoch)
+            self.run_epoch(epoch, neptune_run)
 
     def save_model(self, epoch):
         if (epoch % self.config.save_model_interval == 0) and epoch:
@@ -81,12 +82,14 @@ class Pipeline:
 
 
 class BigBiGANPipeline(Pipeline):
-    def run_epoch(self, epoch):
+    def run_epoch(self, epoch, neptune_run = None):
         for step, (x, y) in tqdm(enumerate(self.dataloader)):
             x, y = x.to(device=self.config.device), y.to(device=self.config.device)
+            # pdb.set_trace()
             self.model.req_grad_disc(True)
             for _ in range(self.config.disc_steps):
-                img_gen, noise = self.model.generate_imgs(cls=y)
+                # img_gen, noise = self.model.generate_imgs(cls=y)
+                img_gen, noise = self.model.generate_imgs()
                 z_img = self.model.generate_latent(img=x)
                 self.disc_optimizer.zero_grad()
                 outputs = self.model.forward(
@@ -94,7 +97,7 @@ class BigBiGANPipeline(Pipeline):
                     img_gen=img_gen.detach(),
                     z_noise=noise,
                     z_img=z_img.detach(),
-                    cls=y
+                    cls=None
                 )
                 disc_loss = self.disc_criterion(outputs)
                 disc_loss.backward()
@@ -102,14 +105,33 @@ class BigBiGANPipeline(Pipeline):
 
             self.model.req_grad_disc(False)
             self.gen_optimizer.zero_grad()
-            outputs = self.model.forward(img_real=x, img_gen=img_gen, z_noise=noise, z_img=z_img, cls=y)
+            # outputs = self.model.forward(img_real=x, img_gen=img_gen, z_noise=noise, z_img=z_img, cls=y)
+            outputs = self.model.forward(img_real=x, img_gen=img_gen, z_noise=noise, z_img=z_img, cls=None)
             gen_enc_loss = self.gen_criterion(outputs)
             gen_enc_loss.backward()
             self.gen_optimizer.step()
 
-            self.save_img(epoch, x, img_gen, z_img, y)
+            # self.save_img(epoch, x, img_gen, z_img, y)
+            self.save_img(epoch, x, img_gen, z_img, None)
             self.save_model(epoch)
             self.logger(epoch, step, disc_loss, gen_enc_loss)
+            neptune_run["train/dics_loss"].log(disc_loss.item())
+            neptune_run["train/gen_loss"].log(gen_enc_loss.item())
+
+
+        n_row = int(np.sqrt(x.shape[0]))
+        org_img = torchvision.utils.make_grid(x.cpu(), nrow=n_row)
+        recons_img = torchvision.utils.make_grid(img_gen.cpu(), nrow=n_row)
+        fig, ax = plt.subplots()
+        plt.imshow(org_img.permute(1, 2, 0))
+        neptune_run["train/org"].log(fig)
+        plt.close()
+
+        fig, ax = plt.subplots()
+        plt.imshow(recons_img.permute(1, 2, 0))
+        neptune_run["train/reconstruction"].log(fig)
+        plt.close()
+
 
     @classmethod
     def from_config(cls, data_path, config):

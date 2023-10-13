@@ -3,6 +3,7 @@ import torch.nn as nn
 
 from src.model import layers
 from src.training_utils import training_utils
+import pdb
 
 
 class GenBigGAN(nn.Module):
@@ -46,6 +47,7 @@ class GenBigGAN(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, z, cls):
+        # pdb.set_trace()
         z = z.float()
         all_z = z.chunk(self.splits, dim=-1)
         z, conds = all_z[0], all_z[1:]

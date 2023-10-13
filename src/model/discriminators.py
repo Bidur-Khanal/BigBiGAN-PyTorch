@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+import pdb
 from src.model import layers
 from src.training_utils import training_utils
 
@@ -38,6 +38,7 @@ class DiscBigGAN(nn.Module):
         if w_init is not None: w_init(self.linear.weight)
 
     def forward(self, x, cls):
+        # pdb.set_trace()
         y = self.pre_down_blocks(x)
         y = self.non_loc(y)
         y = self.post_down_blocks(y)

@@ -4,6 +4,7 @@ from src.training_utils import training_utils
 from src.model import discriminators
 from src.model import encoders
 from src.model import generators
+import pdb
 
 
 class GAN(torch.nn.Module):
@@ -36,6 +37,7 @@ class BigBiGAN(GAN):
         else:
             noise = 0
 
+        # pdb.set_trace()
         img_real_out, img_real_score = self.img_discriminator(x=img_real + noise, cls=cls)
         img_gen_out, img_gen_score = self.img_discriminator(x=img_gen + noise, cls=cls)
 
@@ -54,10 +56,11 @@ class BigBiGAN(GAN):
             "comb_gen_score": comb_gen_score,
         }
 
-        if self.cls is None: self.cls = cls.detach()
+        #if self.cls is None: self.cls = cls.detach()
         return output
 
     def generate_latent(self, img):
+        # pdb.set_trace()
         z_img = self.encoder(img)  # two times bigger img_input
         return z_img
 
@@ -82,7 +85,8 @@ class BigBiGAN(GAN):
         fixed_noise = training_utils.truncated_normal((config.bs, config.latent_dim))
         return cls(
             generator=generators.GenBigGAN.from_config(config),
-            encoder=encoders.RevNetEnc.from_config(config),
+            # encoder=encoders.RevNetEnc.from_config(config),
+            encoder=encoders.ResNetEnc.from_config(config),
             img_discriminator=discriminators.DiscBigGAN.from_config(config),
             latent_discriminator=discriminators.LatentDisc.from_config(config),
             comb_discriminator=discriminators.CombDisc.from_config(config),
@@ -106,7 +110,8 @@ class BigBiWGAN(BigBiGAN):
         fixed_noise = training_utils.truncated_normal((config.bs, config.latent_dim))
         return cls(
             generator=generators.GenBigGAN.from_config(config),
-            encoder=encoders.RevNetEnc.from_config(config),
+            # encoder=encoders.RevNetEnc.from_config(config),
+            encoder=encoders.ResNetEnc.from_config(config),
             img_discriminator=discriminators.DiscBigWGAN.from_config(config),
             latent_discriminator=discriminators.LatentWDisc.from_config(config),
             comb_discriminator=discriminators.CombWDisc.from_config(config),

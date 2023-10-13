@@ -91,6 +91,51 @@ def get_MNIST_loader(data_path, config):
     return get_dataloader(dataset, config.bs)
 
 
+def get_Fetal_loader(data_path, config):
+    dataset = mydatasets.custom_FETAL_PLANE_faster(data_path,train=True, transform=transforms.Compose([
+            transforms.Resize(config.image_size),
+            transforms.CenterCrop(config.image_size),
+            transforms.ToTensor(),
+        ]))
+    
+    return get_dataloader(dataset, config.bs)
+
+def get_Covid19_xray_loader(data_path, config):
+    dataset = mydatasets.custom_COVID19_Xray_faster(data_path,train=True, transform=transforms.Compose([
+            transforms.Resize(config.image_size),
+            transforms.CenterCrop(config.image_size),
+            transforms.ToTensor(),
+        ]))
+    
+    return get_dataloader(dataset, config.bs)
+
+def get_Histopathology_loader(data_path, config):
+    dataset = mydatasets.custom_histopathology_faster(data_path,train=True, transform=transforms.Compose([
+            transforms.Resize(config.image_size),
+            transforms.CenterCrop(config.image_size),
+            transforms.ToTensor(),
+        ]))
+    
+    return get_dataloader(dataset, config.bs)
+
+def get_Mura_loader(data_path, config):
+    dataset = mydatasets.MURA_faster(data_path,train=True, transform=transforms.Compose([
+            transforms.Resize(config.image_size),
+            transforms.CenterCrop(config.image_size),
+            transforms.ToTensor(),
+        ]))
+    
+    return get_dataloader(dataset, config.bs)
+
+def get_Dermnet_loader(data_path, config):
+    dataset = mydatasets.custom_dermnet_faster(data_path,train=True, transform=transforms.Compose([
+            transforms.Resize(config.image_size),
+            transforms.CenterCrop(config.image_size),
+            transforms.ToTensor(),
+        ]))
+    
+    return get_dataloader(dataset, config.bs)
+
 loaders = {
     "MNIST": get_MNIST_loader,
     "FMNIST": get_FMNIST_loader,
@@ -98,6 +143,11 @@ loaders = {
     "CIFAR100": get_CIFAR100_loader,
     "imagenette": get_imagenette_loader,
     "imagewoof": get_imagewoof_loader,
+    "fetal":get_Fetal_loader,
+    "covid19_xray":get_Covid19_xray_loader,
+    "histopathology":get_Histopathology_loader,
+    "mura":get_Mura_loader,
+    "dermnet":get_Dermnet_loader,
 }
 
 
