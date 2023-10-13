@@ -95,7 +95,7 @@ img_color_214x214_config = {
     "embedding_dim": 64,
     "latent_dim": 114,
     "enc_out_dim": 114,
-    "bs": 16,
+    "bs": 32,
     "dropout":0.2,
 }
 

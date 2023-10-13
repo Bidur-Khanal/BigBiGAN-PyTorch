@@ -15,7 +15,6 @@ hparams = {
     "clf_lr": 2e-4,
     "disc_steps": 2,
     "gen_steps": 1,
-    "epochs": 2000,
     "lr_gen": 2e-4,
     "lr_disc": 2e-4,
     "betas": (0.5, 0.999),
