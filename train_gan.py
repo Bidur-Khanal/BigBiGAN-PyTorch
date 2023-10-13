@@ -58,7 +58,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='PyTorch CNN Training')
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="FMNIST",
-                        choices=["FMNIST", "MNIST", "CIFAR10", "CIFAR100", "imagenette", "imagewoof", "fetal"], help="dataset name")
+                        choices=["FMNIST", "MNIST", "CIFAR10", "CIFAR100", "imagenette", "imagewoof", "fetal", "histopathology", "covid19_xray","dermnet","mura"], help="dataset name")
     parser.add_argument("--data_path", type=str, default="../input/fmnist-dataset",
                         help="path to dataset root folder")
     parser.add_argument("--model_architecture", type=str, default="bigbigan",
