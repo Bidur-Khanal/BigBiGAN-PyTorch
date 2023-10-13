@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 
-#SBATCH --account mvaal --partition tier3
+#SBATCH --account bil-ai --partition tier3
 #SBATCH -n 1
 #SBATCH -c 8
 #SBATCH --gres=gpu:a100:1
@@ -9,5 +9,5 @@
 module purge
 conda activate dplearning
 
-python3 -u train_gan.py --root /home/ut3320/learning-with-noisy-labels-benchmark/data/ --dataset $dataset
+python3 -u train_gan.py --data_path /home/ut3320/learning-with-noisy-labels-benchmark/data/ --dataset $dataset
 
