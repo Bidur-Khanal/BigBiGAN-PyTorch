@@ -9,5 +9,5 @@
 module purge
 conda activate dplearning
 
-python3 -u train_gan.py --root /home/bk9618/learning-with-noisy-labels-benchmark/data/ --dataset $dataset
+python3 -u train_gan.py --root /home/ut3320/learning-with-noisy-labels-benchmark/data/ --dataset $dataset
 

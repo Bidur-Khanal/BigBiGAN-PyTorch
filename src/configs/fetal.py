@@ -11,7 +11,7 @@ config = {
     "save_metric_interval": 10,
     "logging_interval": 35,
     "enc_model":"resnet_18",
-    "epochs": 2000,
+    "epochs": 400,
     **hparams.hparams,
     **dataset_configs.img_color_214x214_config,
 }
