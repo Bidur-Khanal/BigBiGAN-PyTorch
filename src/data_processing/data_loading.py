@@ -96,6 +96,7 @@ def get_Fetal_loader(data_path, config):
             transforms.Resize(config.image_size),
             transforms.CenterCrop(config.image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=config.loading_normalization_mean,std=config.loading_normalization_var),
         ]))
     
     return get_dataloader(dataset, config.bs)
@@ -105,6 +106,7 @@ def get_Covid19_xray_loader(data_path, config):
             transforms.Resize(config.image_size),
             transforms.CenterCrop(config.image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=config.loading_normalization_mean,std=config.loading_normalization_var),
         ]))
     
     return get_dataloader(dataset, config.bs)
@@ -114,6 +116,7 @@ def get_Histopathology_loader(data_path, config):
             transforms.Resize(config.image_size),
             transforms.CenterCrop(config.image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=config.loading_normalization_mean,std=config.loading_normalization_var),
         ]))
     
     return get_dataloader(dataset, config.bs)
@@ -123,6 +126,7 @@ def get_Mura_loader(data_path, config):
             transforms.Resize(config.image_size),
             transforms.CenterCrop(config.image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=config.loading_normalization_mean,std=config.loading_normalization_var),
         ]))
     
     return get_dataloader(dataset, config.bs)
@@ -132,6 +136,7 @@ def get_Dermnet_loader(data_path, config):
             transforms.Resize(config.image_size),
             transforms.CenterCrop(config.image_size),
             transforms.ToTensor(),
+            transforms.Normalize(mean=config.loading_normalization_mean,std=config.loading_normalization_var),
         ]))
     
     return get_dataloader(dataset, config.bs)

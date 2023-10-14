@@ -95,7 +95,7 @@ img_color_214x214_config = {
     "embedding_dim": 64,
     "latent_dim": 114,
     "enc_out_dim": 114,
-    "bs": 16,
+    "bs": 8,
     "dropout":0.2,
 }
 
@@ -116,5 +116,25 @@ img_color_64x64_config_ResNet = {
     "latent_dim": 114,
     "enc_out_dim": 114,
     "bs": 16,
+    "dropout":0.2,
+}
+
+
+img_color_128x128_config= {
+    "gen_mult_chs": {"pre": (1024, 512, 256), "post": (256,128), "colors": 3},
+    "disc_mult_chs": {"colors": 3, "pre": (128, ), "post": (256, 512, 1024)},
+    "enc_mult_chs": {"colors": 3, "blocks": (64, 64, 128, 128, 256, 256)},
+    "enc_hidden": 256,
+    "enc_in_mlp_dim": 256, #128,
+    "ks": 3,
+    "image_size": 128,
+    "latent_disc_blocks": 5,
+    "latent_disc_mlp_dim": 128,
+    "comb_disc_blocks": 5,
+    "comb_disc_mlp_dim": 128,
+    "embedding_dim": 64,
+    "latent_dim": 114,
+    "enc_out_dim": 114,
+    "bs": 32,
     "dropout":0.2,
 }
