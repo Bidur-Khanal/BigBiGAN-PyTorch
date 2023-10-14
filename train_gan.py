@@ -70,6 +70,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     params = vars(args)
     run["parameters"] = params
-    run["all files"].upload_files("*.py")
+    run["main_file"].upload_files("*.py")
+    run["src/configs"].upload_files("src/configs/*.py")
+    run["src/data_processing"].upload_files("src/data_processing/*.py")
+    run["src/model"].upload_files("src/model/*.py")
+    run["src/pipeline"].upload_files("src/pipeline/*.py")
+    run["src/train_utils"].upload_files("src/training_utils/*.py")
+
         
     main(args, run)
