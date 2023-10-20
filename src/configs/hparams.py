@@ -34,10 +34,10 @@ hparams = {
     "device": "cuda",
     "img_rows": 4,
     "save_img_count": 12,
-    "real_imgs_save_path": "./data/{ds_name}/input_size_128/{model_architecture}/real_img/{hparams}",
-    "gen_imgs_save_path": "./data/{ds_name}/input_size_128/{model_architecture}/gen_img/{hparams}",
-    "logging_path": "./data/{ds_name}/input_size_128/{model_architecture}/logs/{name}",
-    "save_model_path": "./data/{ds_name}/input_size_128/{model_architecture}/checkpoints/{hparams}",
+    "real_imgs_save_path": "./data/{ds_name}/input_size_128_lr_2e-5/{model_architecture}/real_img/{hparams}",
+    "gen_imgs_save_path": "./data/{ds_name}/input_size_128_lr_2e-5/{model_architecture}/gen_img/{hparams}",
+    "logging_path": "./data/{ds_name}/input_size_128_lr_2e-5/{model_architecture}/logs/{name}",
+    "save_model_path": "./data/{ds_name}/input_size_128_lr_2e-5/{model_architecture}/checkpoints/{hparams}",
     "save_name": "gan",
 
     # hparams #hyperparameters only for mura dataset 

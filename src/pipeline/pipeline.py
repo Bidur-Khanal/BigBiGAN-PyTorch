@@ -19,6 +19,8 @@ class Pipeline:
     ):
         self.dataloader = dataloader
         self.model = model
+        pdb.set_trace()
+        print (self.model)
         self.gen_criterion = gen_criterion
         self.disc_criterion = disc_criterion
         self.gen_optimizer = gen_optimizer
